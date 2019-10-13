@@ -1,0 +1,11 @@
+For button redisgn
+https://codepen.io/davidelvar/pen/dYMgrR?editors=0100#0
+
+for multi step
+https://codepen.io/athimannil/pen/wWPYkQ/
+
+
+<div class="shadow-none p-3 mb-5 bg-light rounded">No shadow</div>
+<div class="shadow-sm p-3 mb-5 bg-white rounded">Small shadow</div>
+<div class="shadow p-3 mb-5 bg-white rounded">Regular shadow</div>
+<div class="shadow-lg p-3 mb-5 bg-white rounded">Larger shadow</div>

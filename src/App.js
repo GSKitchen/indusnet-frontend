@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//import UserForm from "./components/userForm";
+//import VerifyUser from "./components/verifyUser";
+import CompanyDetails from "./components/companyDetails";
+
+class App extends Component {
+  state = {};
+  render() {
+    //console.log(this.props);
+    //const { user } = this.props;
+    //console.log(user.firstName);
+    return (
+      <div className="App container">
+        <h2 className="text-info text-center mt-4">
+          Get Started with Registration
+        </h2>
+        <div className="progress mt-4" style={{ height: "7px" }}>
+          <div
+            className="progress-bar bg-info"
+            role="progressbar"
+            style={{ width: "33.3%" }}
+            aria-valuenow="33.3"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+        <div className="row">
+          <div className="col-md-4 text-center">
+            <span className="text-muted">Your details</span>
+          </div>
+          <div className="col-md-4 text-center">
+            <span className="text-muted">Verify</span>
+          </div>
+          <div className="col-md-4 text-center">
+            <span className="text-muted">Company Details</span>
+          </div>
+        </div>
+        <CompanyDetails />
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  //console.log(state);
+  return {
+    user: state.user.userInfo
+  };
+};
+
+export default connect(mapStateToProps)(App);
