@@ -6,7 +6,7 @@ class CompanyDetails extends Component {
   state = {};
   handleSubmit = e => {
     e.preventDefault();
-    this.props.saveCompany(this.state);
+    this.props.saveCompany(this.state, this.props);
   };
 
   handleChange = e => {
@@ -173,13 +173,19 @@ class CompanyDetails extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user.userInfo
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    saveCompany: company => dispatch(saveCompany(company))
+    saveCompany: (company, props) => dispatch(saveCompany(company, props))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CompanyDetails);

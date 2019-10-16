@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createUser } from "../actions/userActions";
+//import axios from "axios";
 
 class UserForm extends Component {
   state = {
@@ -11,6 +12,14 @@ class UserForm extends Component {
     password: "",
     conPassword: ""
   };
+
+  // componentDidMount() {
+  //   axios
+  //     .get("http://indusnet.ap-south-1.elasticbeanstalk.com/users/")
+  //     .then(res => {
+  //       console.log(res.data);
+  //     });
+  // }
 
   //handle change
   handleChange = e => {
@@ -23,7 +32,7 @@ class UserForm extends Component {
   handleSave = e => {
     e.preventDefault();
     //console.log(this.state);
-    this.props.createUser(this.state);
+    this.props.createUser(this.state, this.props);
   };
   render() {
     return (
@@ -122,7 +131,7 @@ class UserForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createUser: user => dispatch(createUser(user))
+    createUser: (user, props) => dispatch(createUser(user, props))
   };
 };
 
