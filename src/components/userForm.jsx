@@ -13,8 +13,70 @@ class UserForm extends Component {
     conPassword: ""
   };
 
+  // validateElement = event => {
+  //   if (event.target.min > event.target.value.length) {
+
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
+
   //handle change
   handleChange = e => {
+    let element = e.target;
+    let messageElement = document.querySelector("small#" + e.target.id);
+
+    if (e.target.min > e.target.value.length) {
+      element.classList.remove("is-valid");
+      element.classList.add("is-invalid");
+      messageElement.className = "text-danger";
+    } else {
+      element.classList.remove("is-invalid");
+      element.classList.add("is-valid");
+      messageElement.className = "d-none";
+    }
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  };
+
+  handleConPassword = e => {
+    let element = e.target;
+    let messageElement = document.querySelector("small#" + e.target.id);
+
+    if (e.target.value !== this.state.password) {
+      element.classList.remove("is-valid");
+      element.classList.add("is-invalid");
+      messageElement.className = "text-danger";
+    } else {
+      element.classList.remove("is-invalid");
+      element.classList.add("is-valid");
+      messageElement.className = "d-none";
+    }
+    this.setState({
+      ...this.state,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  handleEmail = e => {
+    let element = e.target;
+    let messageElement = document.querySelector("small#" + e.target.id);
+
+    if (
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        element.value
+      )
+    ) {
+      element.classList.remove("is-invalid");
+      element.classList.add("is-valid");
+      messageElement.className = "d-none";
+    } else {
+      element.classList.remove("is-valid");
+      element.classList.add("is-invalid");
+      messageElement.className = "text-danger";
+    }
     this.setState({
       [e.target.id]: e.target.value
     });
@@ -23,8 +85,10 @@ class UserForm extends Component {
   //save form data
   handleSave = e => {
     e.preventDefault();
+    console.log(this.state);
+    //e.target.className += " was-validated";
     //console.log(this.state);
-    this.props.createUser(this.state, this.props);
+    //this.props.createUser(this.state, this.props);
   };
   render() {
     return (
@@ -42,6 +106,7 @@ class UserForm extends Component {
             aria-valuemax="100"
           ></div>
         </div>
+
         <div className="row">
           <div className="col-md-4 text-center">
             <span className="text-muted">Your details</span>
@@ -55,7 +120,7 @@ class UserForm extends Component {
         </div>
         <div className="card shadow p-3 mb-5 mt-5 bg-white rounded">
           <div className="card-body">
-            <form onSubmit={this.handleSave}>
+            <form onSubmit={this.handleSave} autoComplete="false">
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label htmlFor="firstName">First Name</label>
@@ -65,8 +130,10 @@ class UserForm extends Component {
                     placeholder="Enter first name..."
                     className="form-control"
                     onChange={this.handleChange}
+                    required
+                    min="3"
                   />
-                  <small id="firstName" className="form-text text-muted">
+                  <small id="firstName" className="d-none">
                     First Name should be at least 3 characters long
                   </small>
                 </div>
@@ -78,8 +145,10 @@ class UserForm extends Component {
                     placeholder="Enter last name..."
                     className="form-control"
                     onChange={this.handleChange}
+                    required
+                    min="3"
                   />
-                  <small id="lastName" className="form-text text-muted">
+                  <small id="lastName" className="d-none">
                     Last Name should be at least 3 characters long
                   </small>
                 </div>
@@ -90,9 +159,10 @@ class UserForm extends Component {
                     id="email"
                     placeholder="Enter email id"
                     className="form-control"
-                    onChange={this.handleChange}
+                    required
+                    onChange={this.handleEmail}
                   />
-                  <small id="email" className="form-text text-muted">
+                  <small id="email" className="d-none">
                     Please enter a valid email
                   </small>
                 </div>
@@ -104,9 +174,11 @@ class UserForm extends Component {
                     placeholder="Enter Company name..."
                     className="form-control"
                     onChange={this.handleChange}
+                    required
+                    min="5"
                   />
-                  <small id="companyName" className="form-text text-muted">
-                    Company Name should be at least 3 characters long
+                  <small id="companyName" className="d-none">
+                    Company Name should be at least 5 characters long
                   </small>
                 </div>
                 <div className="form-group col-md-6">
@@ -116,28 +188,33 @@ class UserForm extends Component {
                     id="password"
                     placeholder="Enter Password"
                     className="form-control"
+                    required
                     onChange={this.handleChange}
+                    min="6"
                   />
-                  <small id="password" className="form-text text-muted">
+                  <small id="password" className="d-none">
                     Password should be at least 6 characters long
                   </small>
                 </div>
                 <div className="form-group col-md-6">
-                  <label htmlFor="conPassword">Confirm Name</label>
+                  <label htmlFor="conPassword">Confirm Password</label>
                   <input
-                    type="text"
+                    type="password"
+                    placeholder="Confirm password"
+                    className="form-control"
                     id="conPassword"
-                    placeholder="Enter first name..."
-                    className="form-control is-invalid"
-                    onChange={this.handleChange}
+                    onChange={this.handleConPassword}
+                    required
                   />
-                  <small id="conPassword" className="form-text text-muted">
-                    Password doesn't match
+                  <small id="conPassword" className="d-none">
+                    Password does not matching!
                   </small>
                 </div>
               </div>
               <div className="text-center">
-                <button className="btn btn-info pl-4 pr-4">NEXT --></button>
+                <button className="btn btn-info pl-4 pr-4">
+                  NEXT <i className="material-icons">arrow_right_alt</i>
+                </button>
               </div>
             </form>
           </div>
