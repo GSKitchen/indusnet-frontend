@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createUser } from "../actions/userActions";
+import {
+  validateInputField,
+  validateConfirmPassword,
+  validateEmail
+} from "../actions/formValidation";
 //import axios from "axios";
 
 class UserForm extends Component {
@@ -24,36 +29,15 @@ class UserForm extends Component {
 
   //handle change
   handleChange = e => {
-    let element = e.target;
-    let messageElement = document.querySelector("small#" + e.target.id);
+    validateInputField(e.target);
 
-    if (e.target.min > e.target.value.length) {
-      element.classList.remove("is-valid");
-      element.classList.add("is-invalid");
-      messageElement.className = "text-danger";
-    } else {
-      element.classList.remove("is-invalid");
-      element.classList.add("is-valid");
-      messageElement.className = "d-none";
-    }
     this.setState({
       [e.target.id]: e.target.value
     });
   };
 
   handleConPassword = e => {
-    let element = e.target;
-    let messageElement = document.querySelector("small#" + e.target.id);
-
-    if (e.target.value !== this.state.password) {
-      element.classList.remove("is-valid");
-      element.classList.add("is-invalid");
-      messageElement.className = "text-danger";
-    } else {
-      element.classList.remove("is-invalid");
-      element.classList.add("is-valid");
-      messageElement.className = "d-none";
-    }
+    validateConfirmPassword(e.target, this.state.password);
     this.setState({
       ...this.state,
       [e.target.id]: e.target.value
@@ -61,22 +45,7 @@ class UserForm extends Component {
   };
 
   handleEmail = e => {
-    let element = e.target;
-    let messageElement = document.querySelector("small#" + e.target.id);
-
-    if (
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        element.value
-      )
-    ) {
-      element.classList.remove("is-invalid");
-      element.classList.add("is-valid");
-      messageElement.className = "d-none";
-    } else {
-      element.classList.remove("is-valid");
-      element.classList.add("is-invalid");
-      messageElement.className = "text-danger";
-    }
+    validateEmail(e.target);
     this.setState({
       [e.target.id]: e.target.value
     });
@@ -85,10 +54,10 @@ class UserForm extends Component {
   //save form data
   handleSave = e => {
     e.preventDefault();
-    console.log(this.state);
+    //console.log(this.state);
     //e.target.className += " was-validated";
     //console.log(this.state);
-    //this.props.createUser(this.state, this.props);
+    this.props.createUser(this.state, this.props);
   };
   render() {
     return (
