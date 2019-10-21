@@ -14,6 +14,9 @@ code {
 
 .btn {
   border-radius: 40px;
+}
+
+.material-icons {
   display: inline-flex;
   vertical-align: middle;
 }

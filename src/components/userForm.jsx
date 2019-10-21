@@ -15,7 +15,9 @@ class UserForm extends Component {
     email: "",
     companyName: "",
     password: "",
-    conPassword: ""
+    conPassword: "",
+    isLoading: false,
+    isValidForm: false
   };
 
   // validateElement = event => {
@@ -37,9 +39,11 @@ class UserForm extends Component {
   };
 
   handleConPassword = e => {
-    validateConfirmPassword(e.target, this.state.password);
+    let res = validateConfirmPassword(e.target, this.state.password);
+
     this.setState({
       ...this.state,
+      isValidForm: res,
       [e.target.id]: e.target.value
     });
   };
@@ -54,6 +58,10 @@ class UserForm extends Component {
   //save form data
   handleSave = e => {
     e.preventDefault();
+    this.setState({
+      isLoading: true
+    });
+
     //console.log(this.state);
     //e.target.className += " was-validated";
     //console.log(this.state);
@@ -181,8 +189,24 @@ class UserForm extends Component {
                 </div>
               </div>
               <div className="text-center">
-                <button className="btn btn-info pl-4 pr-4">
-                  NEXT <i className="material-icons">arrow_right_alt</i>
+                <button
+                  className="btn btn-info pl-4 pr-4"
+                  disabled={this.state.isValidForm}
+                >
+                  {this.state.isLoading === false ? (
+                    <span>
+                      NEXT <i className="material-icons">arrow_right_alt</i>
+                    </span>
+                  ) : (
+                    <i>
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Please wait
+                    </i>
+                  )}
                 </button>
               </div>
             </form>

@@ -19,10 +19,12 @@ export const validateConfirmPassword = (element, password) => {
     element.classList.remove("is-valid");
     element.classList.add("is-invalid");
     messageElement.className = "text-danger";
+    return true;
   } else {
     element.classList.remove("is-invalid");
     element.classList.add("is-valid");
     messageElement.className = "d-none";
+    return false;
   }
 };
 

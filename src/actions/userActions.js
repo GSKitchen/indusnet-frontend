@@ -5,7 +5,7 @@ export const createUser = (user, props) => {
     axios
       .post("http://indusnet.ap-south-1.elasticbeanstalk.com/users", user)
       .then(res => {
-        if (res.status === 201 || res.status === "201") {
+        if (res.status === 201) {
           props.history.push("/verify");
         }
       });
@@ -25,7 +25,8 @@ export const verifyOtp = (userData, props) => {
         userData
       )
       .then(res => {
-        //console.log(res);
+        //console.log(res.data);
+        //pass it to dispatch
         if (res.status === 200) {
           message = res.statusText;
           props.history.push("/company-details");
