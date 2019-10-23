@@ -9,9 +9,10 @@ import thunk from "redux-thunk";
 
 import rootReducer from "./reducers/rootReducer";
 
-//create redux store
+//create redux store to centralize React Component state
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+//Rendering App
 ReactDOM.render(
   <Provider store={store}>
     <App />

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//these are intermidiator method between dispathc and reducer
 export const createUser = (user, props) => {
   return (dispatch, getState) => {
     axios

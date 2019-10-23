@@ -1,21 +1,14 @@
+// initial state
 const initState = {
-  userInfo: [
-    {
-      firstName: "fn",
-      lastName: "fssss",
-      email: "sfdf@gmail.com",
-      companyName: "gvvv",
-      password: "pw",
-      conPassword: "cpm"
-    }
-  ],
   user: null,
   userOtp: "",
   companyDetails: null,
   errorMessage: ""
 };
 
+//this reducer take state adnd action as parameter
 const userReducer = (state = initState, action) => {
+  //differentiate action type
   switch (action.type) {
     case "CREATE_USER":
       console.log("created user", action.user);

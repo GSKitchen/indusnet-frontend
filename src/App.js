@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 
+//Importing my components
 import UserForm from "./components/userForm";
 import VerifyUser from "./components/verifyUser";
 import CompanyDetails from "./components/companyDetails";
@@ -11,12 +12,14 @@ import Login from "./components/login";
 import Home from "./components/home";
 
 class App extends Component {
+  //initiate state
   state = {};
   render() {
     //console.log(this.props);
     //const { user } = this.props;
     //console.log(user.firstName);
     return (
+      //applying router to navigate component
       <BrowserRouter>
         <div className="App container">
           <Route exact path="/" component={UserForm} />
